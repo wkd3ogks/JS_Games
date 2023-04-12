@@ -16,12 +16,21 @@ body {
 table {
     margin: 0 auto;
     width: 350px;
-    height: 705px;
+    height: 700px;
     border-spacing: 0;
 }
 td {
     width : 35px;
     height : 35px;
+}
+
+.wrapper {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    width : 750px;
+    height : 750px;
+    border : 5px solid white;
 }
 
 /* Tetris Block Setting -> https://codepen.io/jh3y/pen/MQJBEN*/
