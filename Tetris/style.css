@@ -1,0 +1,36 @@
+/* Basic Setting */
+
+* {
+    box-sizing: border-box;
+    margin : 0;
+    padding : 0;
+}
+body {
+    height : 100vh;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+table {
+    margin: 0 auto;
+    width: 350px;
+    height: 705px;
+    border-spacing: 0;
+}
+td {
+    width : 35px;
+    height : 35px;
+}
+
+/* Tetris Block Setting -> https://codepen.io/jh3y/pen/MQJBEN*/
+.block {
+    /* TODO : Color Setting Must Use JS */
+    background-color: #663399;  
+    border-color: #663399;
+    
+    border-radius : 2px;
+    border-width: 5px;
+    border-style : outset;
+}
