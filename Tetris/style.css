@@ -24,6 +24,7 @@ td {
     height : 35px;
 }
 
+/* Game Display Setting */
 .wrapper {
     text-align: center;
     display: flex;
@@ -35,10 +36,7 @@ td {
 
 /* Tetris Block Setting -> https://codepen.io/jh3y/pen/MQJBEN*/
 .block {
-    /* TODO : Color Setting Must Use JS */
-    background-color: #663399;  
-    border-color: #663399;
-    
+    /* Color Settings are in JS Code [Fill(Block's Method)] */
     border-radius : 2px;
     border-width: 5px;
     border-style : outset;
