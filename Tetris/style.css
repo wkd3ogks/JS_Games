@@ -41,3 +41,17 @@ td {
     border-width: 5px;
     border-style : outset;
 }
+
+.solid {
+    /* Color Settings are in JS Code [Fill(Block's Method)] */
+    border-radius : 2px;
+    border-width: 5px;
+    border-style : outset;
+}
+
+.boom {
+    /* Color Settings are in JS Code [Fill(Block's Method)] */
+    border-radius : 2px;
+    border-width: 5px;
+    border-style : outset;
+}
