@@ -3,6 +3,10 @@ class Block {
         if (this.constructor === Block) {
             throw new Error("Can't Create Instance By Abstract Class");
         }
+        for(let i = 0; i < BLOCK_SIZE; i++) {
+
+        }
+        this.EndFlag = false;
         this.y = 0; this.x = 0;
         this.SPEED = speed;
         this.Rotate = 0;
@@ -11,6 +15,11 @@ class Block {
     // Public Field
 
     Show() {
+        // End of Game!
+        if(this.CollisonDetect()) {
+            alert("Game Over!");
+            return;
+        }
         this.Display();
         this.Controller();
     }
@@ -30,7 +39,7 @@ class Block {
     }
 
     Keyboard(e) {
-        if(e.key == 'd') {
+        if(e.key == 'ArrowRight') {
             // Not End.. Just Can't Move
             if(this.CollisonDetect(this.y, this.x + 1)) {
                 return;
@@ -39,7 +48,7 @@ class Block {
             this.x++;
             this.Display();
         }  
-        else if(e.key == 'a') {
+        else if(e.key == 'ArrowLeft') {
             // Not End.. Just Can't Move
             if(this.CollisonDetect(this.y, this.x - 1)) {
                 return;
@@ -48,7 +57,7 @@ class Block {
             this.x--;
             this.Display();
         }  
-        else if(e.key == 's') {
+        else if(e.key == 'ArrowDown') {
             // Not End.. Just Can't Move
             if(this.CollisonDetect(this.y + 1, this.x)) {
                 return;
@@ -68,14 +77,20 @@ class Block {
             this.ClearBoard();
             this.Display();
         }
+        else if(e.key == ' ') {
+            while(!this.CollisonDetect(this.y + 1, this.x)) {
+                this.ClearBoard();
+                this.y++;
+                this.Display();
+            }
+        }
     }
     Controller() {
         let Control = this.Keyboard.bind(this);
         window.addEventListener("keydown", Control);
         let Gravity = setInterval(() => {
-
             // End Controll Block..
-            if(this.CollisonDetect(this.y + 1, this.x)) {
+            if(this.CollisonDetect(this.y + 1, this.x) || this.EndFlag) {
                 NewBlock = true;
                 this._BlockToSolid();
                 this._PointCheck();    
@@ -135,13 +150,7 @@ class Block {
             }
         }
         this._Explode();
-        for(let i = 0; i < HEIGHT; i++) {
-            for(let j = 0; j < WIDTH; j++) {
-                if(Board[i][j].className === "boom") Board[i][j].className = "empty";
-            }
-        }
     }
-
     _Explode() {
         const blocksExplode = TweenLite.to('.boom', .35, {
             scale: 1.75,
@@ -154,12 +163,37 @@ class Block {
         const original = TweenLite.to('.boom', 0, {
             scale: 1,
             backgroundColor: 'black',
+            borderColor : 'black',
             borderWidth: 5
         });
         const timeline = new TimelineMax();
         timeline.add(blocksExplode).add(blocksImplode).add(original);
+        timeline.eventCallback("onComplete", this._AfterExplode);
     }
-
+    _AfterExplode() {
+        for(let i = 0; i < HEIGHT; i++) {
+            for(let j = 0; j < WIDTH; j++) {
+                if(Board[i][j].className === "boom") 
+                {
+                    for(let y = i; y > 0; y--) {
+                        let Node1 = Board[y][j], Node2 = Board[y - 1][j];
+                        Node1.className = Node2.className;
+                        Node1.style.backgroundColor = Node2.style.backgroundColor;
+                        Node1.style.borderColor = Node2.style.borderColor;
+                        Node2.className = "empty";
+                        Node2.style.backgroundColor = 'black';
+                        Node2.style.borderColor = 'black';
+                    }
+                    if(i == 0) {
+                        let Node = Board[i][j];
+                        Node.className = "empty";
+                        Node.style.backgroundColor = 'black';
+                        Node.style.borderColor = 'black';
+                    }
+                }
+            }
+        }
+    }
 }
 class L_Block extends Block {
     constructor(speed) {

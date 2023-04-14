@@ -14,10 +14,11 @@ body {
 }
 
 table {
-    margin: 0 auto;
     width: 350px;
     height: 700px;
+    margin : 0 10px;
     border-spacing: 0;
+    border : 1px solid white;
 }
 td {
     width : 35px;
@@ -26,12 +27,32 @@ td {
 
 /* Game Display Setting */
 .wrapper {
-    text-align: center;
     display: flex;
     align-items: center;
     width : 750px;
     height : 750px;
     border : 5px solid white;
+}
+
+.next {
+    box-sizing: border-box;
+    width : 100px;
+    height : 100px;
+    border-spacing: 0;
+}
+
+.next table {
+    width : 100px;
+    height : 100px;
+    border : 1px solid white;
+    margin : 0;
+}
+
+.next td {
+    box-sizing: border-box;
+    border : 1px solid white;
+    width : 25px;
+    height : 25px;
 }
 
 /* Tetris Block Setting -> https://codepen.io/jh3y/pen/MQJBEN*/

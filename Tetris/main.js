@@ -1,6 +1,8 @@
 gsap.config({nullTargetWarn:false});
 
 const Board = [];
+const NextBlcok = [];
+
 const WIDTH = 10;
 const HEIGHT = 20;
 const BLOCK_SIZE = 4;
@@ -25,6 +27,17 @@ class Tetris {
             }
             $table.appendChild($tr);
         }
+        const $next = document.querySelector('.next table');
+        for(let i = 0; i < BLOCK_SIZE; i++) {
+            NextBlcok.push([]);
+            const $tr = document.createElement('tr');
+            for(let j = 0; j < BLOCK_SIZE; j++) {
+                const $td = document.createElement('td');
+                NextBlcok[i].push($td);
+                $tr.appendChild($td);
+            }
+            $next.appendChild($tr);
+        }
     }
 
     // Prepare Two Block..
@@ -47,12 +60,29 @@ class Tetris {
         }
     }
 
+    _NextShow(block) {
+        for(let i = 0; i < BLOCK_SIZE; i++) {
+            for(let j = 0; j < BLOCK_SIZE;j++) {
+                NextBlcok[i][j].style.backgroundColor = "black";
+            }
+        }
+        for(let i = 0; i < BLOCK_SIZE; i++) {
+            for(let j = 0; j < BLOCK_SIZE;j++) {
+                if(block.Configure[block.Rotate][i][j] === 1) {
+                    NextBlcok[i][j].style.backgroundColor = "white";
+                }
+            }
+        }
+    }
+    //Public Field
     Run() {
         this._Init();
+        this.next = this._RandomBlock();
         setInterval(()=> {
             if(NewBlock) {
-                let unit = this._RandomBlock();
-                console.log(unit);
+                let unit = this.next;
+                this.next = this._RandomBlock();
+                this._NextShow(this.next);
                 NewBlock = false;
                 unit.Show();
             }
