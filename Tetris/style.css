@@ -40,6 +40,7 @@ td {
     height: 700px;
     display : flex;
     align-items: center;
+    justify-content: space-between;
     flex-direction: column;
 }
 
@@ -67,7 +68,7 @@ td {
 
 .text {
     font-family: 'Consolas', cursive;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size : 20px;
 }
 .point {
@@ -75,6 +76,12 @@ td {
 }
 
 .level {
+    color : white;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
     color : white;
 }
 
