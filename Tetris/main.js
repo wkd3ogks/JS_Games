@@ -1,5 +1,3 @@
-gsap.config({nullTargetWarn:false});
-
 const Board = [];
 const NextBlcok = [];
 
@@ -10,7 +8,6 @@ const BLOCK_SIZE = 4;
 class Tetris {
     constructor() {
         this.NeedBlock = true;
-        this.interval = null;
         this.Level = 1;
         this.Point = 0;
         this.PointTable = [0, 100, 300, 500, 800];
@@ -69,12 +66,17 @@ class Tetris {
         for(let i = 0; i < BLOCK_SIZE; i++) {
             for(let j = 0; j < BLOCK_SIZE;j++) {
                 NextBlcok[i][j].style.backgroundColor = "black";
+                NextBlcok[i][j].style.borderStyle = "none";
             }
         }
         for(let i = 0; i < BLOCK_SIZE; i++) {
             for(let j = 0; j < BLOCK_SIZE;j++) {
                 if(block.Configure[block.Rotate][i][j] === 1) {
-                    NextBlcok[i][j].style.backgroundColor = "white";
+                    NextBlcok[i][j].style.backgroundColor = this.Next.Color;
+                    NextBlcok[i][j].style.borderColor = this.Next.Color;
+                    NextBlcok[i][j].style.borderRadius = "2px";
+                    NextBlcok[i][j].style.borderWidth = "3px";
+                    NextBlcok[i][j].style.borderStyle = "outset";
                 }
             }
         }
@@ -86,7 +88,7 @@ class Tetris {
         this._ShowPoint();
     }
     _ShowLevel() {
-        document.querySelector(".level").innerHTML = `LEVEL : ${this.Level}`;
+        document.querySelector(".level").innerHTML = `Level : ${this.Level}`;
     }
     _ShowPoint() {
         document.querySelector(".point").innerHTML = `Point : ${this.Point}`;
@@ -94,7 +96,7 @@ class Tetris {
     //Public Field
     Run() {
         this._Init();
-        this.interval = setInterval(()=> {
+        setInterval(()=> {
             if(this.NeedBlock) {
                 this.NeedBlock = false;
                 this.SetBlockSpeed(this.Next);

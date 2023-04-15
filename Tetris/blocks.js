@@ -89,9 +89,13 @@ class Block {
             if(this.CollisonDetect(this.y + 1, this.x)) {
                 window.removeEventListener("keydown", Control);
                 this._BlockToSolid();
+
+                // Controll Tetris in Block
                 this.Game.ChangePoint(this._PointCheck());
                 this.Game.ChangeLevel();
                 this.Game.NeedBlock = true; // -> Tetris Run _AddBlock Method
+
+                
                 clearInterval(Gravity);
                 return;
             }
@@ -150,29 +154,8 @@ class Block {
             }
         }
         this._Explode();
-        //this._Explode();
         return cnt;
     }
-    /*  Explode Animation!
-    _Explode() {
-        const blocksExplode = TweenLite.to('.boom', .35, {
-            scale: 1.75,
-            backgroundColor: 'white',
-            borderWidth: 0,
-        });
-        const blocksImplode = TweenLite.to('.boom', .15, {
-            scale: 0,
-        });
-        const original = TweenLite.to('.boom', 0, {
-            scale: 1,
-            backgroundColor: 'black',
-            borderColor : 'black',
-            borderWidth: 5
-        });
-        const timeline = new TimelineMax();
-        timeline.add(blocksExplode).add(blocksImplode).add(original);
-        timeline.eventCallback("onComplete", this._AfterExplode);
-    } */
     _Explode() {
         for(let i = 0; i < HEIGHT; i++) {
             for(let j = 0; j < WIDTH; j++) {
@@ -197,6 +180,27 @@ class Block {
             }
         }
     }
+
+    /*  Explode Animation!
+    _Explode() {
+        const blocksExplode = TweenLite.to('.boom', .35, {
+            scale: 1.75,
+            backgroundColor: 'white',
+            borderWidth: 0,
+        });
+        const blocksImplode = TweenLite.to('.boom', .15, {
+            scale: 0,
+        });
+        const original = TweenLite.to('.boom', 0, {
+            scale: 1,
+            backgroundColor: 'black',
+            borderColor : 'black',
+            borderWidth: 5
+        });
+        const timeline = new TimelineMax();
+        timeline.add(blocksExplode).add(blocksImplode).add(original);
+        timeline.eventCallback("onComplete", this._AfterExplode);
+    } */
 }
 class L_Block extends Block {
     constructor(speed, Tetris) {

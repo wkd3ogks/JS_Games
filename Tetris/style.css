@@ -28,11 +28,21 @@ td {
 /* Game Display Setting */
 .wrapper {
     display: flex;
+    justify-content: center;
     align-items: center;
     width : 750px;
     height : 750px;
-    border : 5px solid white;
+    /* border : 5px solid white; */
 }
+
+.status {
+    width : 150px;
+    height: 700px;
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 
 .next {
     box-sizing: border-box;
@@ -45,16 +55,21 @@ td {
     width : 100px;
     height : 100px;
     border : 1px solid white;
+    padding : 5px;
     margin : 0;
 }
 
 .next td {
     box-sizing: border-box;
-    border : 1px solid white;
     width : 25px;
     height : 25px;
 }
 
+.text {
+    font-family: 'Consolas', cursive;
+    margin-top: 30px;
+    font-size : 20px;
+}
 .point {
     color : white;
 }
