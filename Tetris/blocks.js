@@ -1,20 +1,16 @@
 class Block {
-    constructor(speed) {
+    constructor(speed, Tetris) {
         if (this.constructor === Block) {
             throw new Error("Can't Create Instance By Abstract Class");
         }
-        for(let i = 0; i < BLOCK_SIZE; i++) {
-
-        }
-        this.EndFlag = false;
+        this.Game = Tetris;
         this.y = 0; this.x = 0;
         this.SPEED = speed;
         this.Rotate = 0;
     }
 
     // Public Field
-
-    Show() {
+    Run() {
         // End of Game!
         if(this.CollisonDetect()) {
             alert("Game Over!");
@@ -90,28 +86,21 @@ class Block {
         window.addEventListener("keydown", Control);
         let Gravity = setInterval(() => {
             // End Controll Block..
-            if(this.CollisonDetect(this.y + 1, this.x) || this.EndFlag) {
-                NewBlock = true;
-                this._BlockToSolid();
-                this._PointCheck();    
+            if(this.CollisonDetect(this.y + 1, this.x)) {
                 window.removeEventListener("keydown", Control);
+                this._BlockToSolid();
+                this.Game.ChangePoint(this._PointCheck());
+                this.Game.ChangeLevel();
+                this.Game.NeedBlock = true; // -> Tetris Run _AddBlock Method
                 clearInterval(Gravity);
                 return;
             }
-
             this.y++;
             this.Display(this.y, this.x);
         }, this.SPEED);
-        
     }
 
     // Private Field
-    Fill(y, x) {
-        Board[y][x].className = "block";
-        Board[y][x].style.backgroundColor = this.Color;
-        Board[y][x].style.borderColor = this.Color;
-    }
-    
     _BlockToSolid() {
         for(let i = 0; i < BLOCK_SIZE; i++) {
             for(let j = 0; j < BLOCK_SIZE; j++) {
@@ -137,20 +126,34 @@ class Block {
         this.ClearBoard();
         for(let i = 0; i < BLOCK_SIZE; i++) {
             for(let j = 0; j < BLOCK_SIZE; j++) {
-                if(this.Configure[this.Rotate][i][j] === 1) this.Fill(y + i, x + j);
+                if(this.Configure[this.Rotate][i][j] === 1) this._Fill(y + i, x + j);
             }
         }
     }
+    _Fill(y, x) {
+        Board[y][x].className = "block";
+        Board[y][x].style.backgroundColor = this.Color;
+        Board[y][x].style.borderColor = this.Color;
+    }
+
+
     _PointCheck() {
+        let cnt = 0;
         for(let i = 0; i < HEIGHT; i++) {
             let flag = 0;
             for(let j = 0; j < WIDTH; j++) if(Board[i][j].className === "solid") flag++;
             if(flag === WIDTH) {
-                for(let j = 0; j < WIDTH; j++) Board[i][j].className = "boom";
+                for(let j = 0; j < WIDTH; j++) {
+                    Board[i][j].className = "boom";
+                }
+                cnt++;
             }
         }
         this._Explode();
+        //this._Explode();
+        return cnt;
     }
+    /*  Explode Animation!
     _Explode() {
         const blocksExplode = TweenLite.to('.boom', .35, {
             scale: 1.75,
@@ -169,8 +172,8 @@ class Block {
         const timeline = new TimelineMax();
         timeline.add(blocksExplode).add(blocksImplode).add(original);
         timeline.eventCallback("onComplete", this._AfterExplode);
-    }
-    _AfterExplode() {
+    } */
+    _Explode() {
         for(let i = 0; i < HEIGHT; i++) {
             for(let j = 0; j < WIDTH; j++) {
                 if(Board[i][j].className === "boom") 
@@ -196,8 +199,8 @@ class Block {
     }
 }
 class L_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         this.Color = "#00e640";
         this.Configure = [
             [
@@ -228,8 +231,8 @@ class L_Block extends Block {
     }
 }
 class J_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         this.Color = "#22a7f0";
         this.Configure = [
             [
@@ -260,8 +263,8 @@ class J_Block extends Block {
     }
 }
 class I_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         
         this.Color = "#663399";
         this.Configure = [
@@ -293,8 +296,8 @@ class I_Block extends Block {
     }
 }
 class O_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         this.Color = "#86e2d5";
         this.Configure = [
             [
@@ -325,8 +328,8 @@ class O_Block extends Block {
     }
 } 
 class S_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         this.Color = "#f03434";
         this.Configure = [
             [
@@ -357,8 +360,8 @@ class S_Block extends Block {
     }
 } 
 class T_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         this.Color = "#d35400";
         this.Configure = [
             [
@@ -389,8 +392,8 @@ class T_Block extends Block {
     }
 } 
 class Z_Block extends Block {
-    constructor(speed) {
-        super(speed)
+    constructor(speed, Tetris) {
+        super(speed, Tetris)
         this.Color = "#1f3a93";
         this.Configure = [
             [

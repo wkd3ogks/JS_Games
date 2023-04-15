@@ -55,6 +55,14 @@ td {
     height : 25px;
 }
 
+.point {
+    color : white;
+}
+
+.level {
+    color : white;
+}
+
 /* Tetris Block Setting -> https://codepen.io/jh3y/pen/MQJBEN*/
 .block {
     /* Color Settings are in JS Code [Fill(Block's Method)] */
